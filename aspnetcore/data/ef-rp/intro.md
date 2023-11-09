@@ -1,6 +1,6 @@
 ---
 title: Razor Pages with Entity Framework Core in ASP.NET Core - Tutorial 1 of 8
-author: rick-anderson
+author: tdykstra
 description: Shows how to create a Razor Pages app using Entity Framework Core
 ms.author: riande
 monikerRange: '>= aspnetcore-3.1'
@@ -91,6 +91,8 @@ Select `ContosoUniversity.csproj` to open the project.
   dotnet ef database update
     
   ```
+
+[!INCLUDE[](~/includes/dotnet-tool-install-arch-options.md)]
 
 <!-- prerelease versions require
   dotnet tool uninstall --global dotnet-ef
@@ -448,7 +450,7 @@ The code checks if there are any students in the database. If there are no stude
 
 * In `Program.cs`, remove `//` from the `DbInitializer.Initialize` line:
 
- [!code-csharp[Main](intro/samples/cu60/Program.cs?name=snippet_ensure&highlight=6)]
+ [!code-csharp[Main](intro/samples/cu60/Program.cs?name=snippet_ensure&highlight=7)]
 
 # [Visual Studio](#tab/visual-studio)
 
@@ -517,6 +519,9 @@ Some things to be aware of when writing asynchronous code that uses EF Core:
 * To take advantage of the performance benefits of async code, verify that library packages (such as for paging) use async if they call EF Core methods that send queries to the database.
 
 For more information about asynchronous programming in .NET, see [Async Overview](/dotnet/standard/async) and [Asynchronous programming with async and await](/dotnet/csharp/programming-guide/concepts/async/).
+
+> [!WARNING]
+> The async implementation of [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) has some known issues ([#593](https://github.com/dotnet/SqlClient/issues/593), [#601](https://github.com/dotnet/SqlClient/issues/601), and others). If you're seeing unexpected performance problems, try using sync command execution instead, especially when dealing with large text or binary values.
 
 <!-- Review: See https://github.com/dotnet/AspNetCore.Docs/issues/14528 -->
 ## Performance considerations
